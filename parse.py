@@ -3,6 +3,7 @@
 import csv
 import sys
 import codecs
+import re
 
 def unicode_csv_reader(unicode_csv_data, dialect=csv.excel, **kwargs):
     # csv.py doesn't do Unicode; encode temporarily as UTF-8:
@@ -33,7 +34,7 @@ def write_html(filename, header, rows):
     for row in rows:
         out_file.write('<tr>')
         for field in row:
-            out_file.write('<td>%s</td>' % field.replace('\n', '<br>'))
+            out_file.write('<td>%s</td>' % re.sub('\n\r?', '<br>', field))
         out_file.write('</tr>\n')
     out_file.write('</table></body>')
     out_file.close()
